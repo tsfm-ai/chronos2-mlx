@@ -257,6 +257,12 @@ pytest
 
 ---
 
+## Hosted forecasting
+
+Want to run Chronos-2 and other TSFMs without managing models locally? [TSFM.ai](https://tsfm.ai) offers a hosted API for Chronos and other leading time-series foundation models.
+
+---
+
 ## License
 
 Apache-2.0. Chronos-2 model weights are subject to [Amazon's license](https://huggingface.co/amazon/chronos-2).
