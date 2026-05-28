@@ -1,7 +1,7 @@
-# chronos2-mlx
+# mlx-chronos2
 
 [![CI](https://github.com/tsfm-ai/chronos2-mlx/actions/workflows/ci.yml/badge.svg)](https://github.com/tsfm-ai/chronos2-mlx/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/chronos2-mlx)](https://pypi.org/project/chronos2-mlx/)
+[![PyPI](https://img.shields.io/pypi/v/mlx-chronos2)](https://pypi.org/project/mlx-chronos2/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
@@ -20,7 +20,7 @@ Runs `amazon/chronos-2` natively on M-series chips using [MLX](https://github.co
 ## Install
 
 ```bash
-pip install chronos2-mlx
+pip install mlx-chronos2
 ```
 
 ## Quickstart
@@ -242,7 +242,7 @@ emb_df = pipe.embed_df(df, id_col="item_id", time_col="ds", target_col="y")
 
 ```bash
 git clone https://github.com/tsfm-ai/chronos2-mlx
-cd chronos2-mlx
+cd mlx-chronos2
 pip install -e ".[dev]"
 
 # Run tests (fast — no torch required)
