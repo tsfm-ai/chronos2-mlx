@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Test (macOS Apple Silicon)
+    runs-on: macos-latest  # arm64, Apple Silicon
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package
+        run: pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Cache HuggingFace models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-chronos2-${{ hashFiles('src/chronos2_mlx/weights.py') }}
+          restore-keys: hf-chronos2-
+
+      - name: Run tests (excluding parity)
+        run: pytest -m "not parity" --tb=short
+
+  parity:
+    name: Parity (torch vs MLX)
+    runs-on: macos-latest
+    # Only run on main pushes to keep PR CI fast
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package with parity deps
+        run: pip install -e ".[dev]" --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Cache HuggingFace models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-chronos2-parity-${{ hashFiles('src/chronos2_mlx/weights.py') }}
+          restore-keys: hf-chronos2-
+
+      - name: Run parity tests
+        run: pytest -m parity --tb=short
